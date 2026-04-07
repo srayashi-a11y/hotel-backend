@@ -18,9 +18,10 @@ const sendEmail = async (to, subject, html, attachments = []) => {
       subject,
       htmlContent: html,
       attachment: attachments.map(file => ({
-        name: file.filename,
-        content: file.content.toString("base64")
-      }))
+  name: file.filename,
+  content: Buffer.from(file.content).toString("base64"),
+  type: file.contentType
+}))
     };
 
     await apiInstance.sendTransacEmail(emailData);
