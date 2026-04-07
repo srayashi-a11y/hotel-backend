@@ -2,7 +2,8 @@ const razorpay = require("../config/razorpay")
 const sendEmail = require("../utils/sendEmail");
 const User = require("../models/User");
 const generateInvoiceAndSendEmail = require("../utils/invoiceWorker");
-const puppeteer = require("puppeteer");
+const chromium = require("@sparticuz/chromium");
+const puppeteer = require("puppeteer-core");
 const QRCode = require("qrcode");
 // exports.createOrder = async (req,res)=>{
 
@@ -494,9 +495,10 @@ This is a computer-generated invoice. No signature required.
     //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
     //   headless: true
     // });
-    const browser = await puppeteer.launch({
-  headless: "new",
-  args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  const browser = await puppeteer.launch({
+  args: chromium.args,
+  executablePath: await chromium.executablePath(),
+  headless: chromium.headless,
 });
 
     const page = await browser.newPage();

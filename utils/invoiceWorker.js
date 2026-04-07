@@ -1,5 +1,5 @@
-const puppeteer = require("puppeteer");
-process.env.PUPPETEER_EXECUTABLE_PATH = puppeteer.executablePath();
+const chromium = require("@sparticuz/chromium");
+const puppeteer = require("puppeteer-core");
 const QRCode = require("qrcode");
 const User = require("../models/User");
 const Booking = require("../models/Booking");
@@ -315,10 +315,15 @@ This is a computer-generated invoice. No signature required.
     //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
     //   headless: true
     // });
+    // const browser = await puppeteer.launch({
+    //   headless: "new",
+    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    // });
     const browser = await puppeteer.launch({
-      headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+  args: chromium.args,
+  executablePath: await chromium.executablePath(),
+  headless: chromium.headless,
+});
  
 
     const page = await browser.newPage();
