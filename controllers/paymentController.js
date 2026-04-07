@@ -202,7 +202,7 @@ const extras = booking.grandTotal - (subtotal + tax);
     const isRefund = booking.paymentStatus === "refunded";
 
     // ✅ QR DATA (verification URL)
-    const verifyUrl = `http://localhost:5173/verify-booking/${booking._id}`;
+   const verifyUrl = `${process.env.FRONTEND_URL}/verify-booking/${booking._id}`;
     const qrCode = await QRCode.toDataURL(verifyUrl);
 
     const html = `
