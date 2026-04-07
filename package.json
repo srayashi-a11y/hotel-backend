@@ -27,6 +27,7 @@
     "puppeteer-core": "^24.40.0",
     "qrcode": "^1.5.4",
     "razorpay": "^2.9.6",
-    "recharts": "^3.8.1"
+    "recharts": "^3.8.1",
+    "sib-api-v3-sdk": "^8.5.0"
   }
 }

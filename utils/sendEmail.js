@@ -1,29 +1,34 @@
-const nodemailer = require("nodemailer");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 const sendEmail = async (to, subject, html, attachments = []) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT),
-      secure: false, // important for 587
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    const client = SibApiV3Sdk.ApiClient.instance;
 
-    await transporter.sendMail({
-      from: `"Hotel Booking" <${process.env.EMAIL_USER}>`,
-      to,
+    const apiKey = client.authentications["api-key"];
+    apiKey.apiKey = process.env.BREVO_API_KEY;
+
+    const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+    const emailData = {
+      sender: {
+        email: process.env.EMAIL_USER,
+        name: "Hotel Booking"
+      },
+      to: [{ email: to }],
       subject,
-      html,
-      attachments
-    });
+      htmlContent: html,
+      attachment: attachments.map(file => ({
+        name: file.filename,
+        content: file.content.toString("base64")
+      }))
+    };
 
-    console.log("✅ Email sent successfully");
+    await apiInstance.sendTransacEmail(emailData);
+
+    console.log("✅ Email sent via API");
 
   } catch (err) {
-    console.error("❌ Email error:", err);
+    console.error("❌ Email API error:", err.response?.body || err);
   }
 };
 
