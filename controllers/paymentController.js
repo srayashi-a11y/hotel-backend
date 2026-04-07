@@ -471,7 +471,7 @@ ${isRefund ? `
 
 <div class="footer">
   <div class="signature">
-     <img src="http://localhost:5173/images/sign.jpg" />
+     <img src="${process.env.FRONTEND_URL}/images/sign.jpg" />
     <p>Authorized Signature</p>
   </div>
 
@@ -490,10 +490,14 @@ This is a computer-generated invoice. No signature required.
 </body>
 </html>
 `;
+    // const browser = await puppeteer.launch({
+    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    //   headless: true
+    // });
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      headless: true
-    });
+  headless: "new",
+  args: ["--no-sandbox", "--disable-setuid-sandbox"],
+});
 
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "domcontentloaded" });

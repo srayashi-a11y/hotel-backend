@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+process.env.PUPPETEER_EXECUTABLE_PATH = puppeteer.executablePath();
 const QRCode = require("qrcode");
 const User = require("../models/User");
 const Booking = require("../models/Booking");
@@ -305,19 +306,19 @@ This is a computer-generated invoice. No signature required.
 </html>
 `;
 
-    const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      headless: true
-    });
+    // const browser = await puppeteer.launch({
+    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    //   headless: true
+    // });
     // const browser = await puppeteer.launch({
     //   executablePath: "C:\\Users\\Monojit-PC\\.cache\\puppeteer\\chrome\\win64-146.0.7680.153\\chrome-win64\\chrome.exe",
     //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
     //   headless: true
     // });
-    // const browser = await puppeteer.launch({
-    //   headless: "new",
-    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    // });
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
  
 
     const page = await browser.newPage();
