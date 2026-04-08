@@ -17,4 +17,5 @@ router.get("/user/:email", bookingController.getMyBookings);
 router.get("/my-bookings", protect, getMyBookings);
 router.put("/cancel/:id", protect, bookingController.cancelBooking);
 router.get("/stats/dashboard", bookingController.getDashboardStats);
+router.get("/verify/:id", bookingController.verifyBooking);
 module.exports = router;
